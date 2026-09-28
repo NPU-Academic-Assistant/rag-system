@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from app.assistant.models.concept_history import ConceptHistory
+from RAG.LECTURE.services.models.concept_history import ConceptHistory
 
 
 @dataclass

@@ -1,14 +1,11 @@
 import json
 
-from app.assistant.llm.llm_client import llm_client
-from app.assistant.prompts.router_prompt import RouterPrompt
-from app.assistant.router.route import Route
-from app.assistant.router.route_decision import RouteDecision
-from app.config import (
-    ROUTER_MODEL,
-    ROUTER_TEMPERATURE,
-)
-
+from SHARED.dependencies import llm_client
+from SHARED.prompts.router_prompt import RouterPrompt
+from RAG.QA.router.route import Route
+from RAG.QA.router.route_decision import RouteDecision
+from SHARED.config import settings
+from SHARED.dependencies import ROUTER_TEMPERATURE
 
 class RequestRouter:
     """
@@ -30,7 +27,7 @@ class RequestRouter:
     def __init__(self):
 
         self.client = llm_client.client
-        self.model = ROUTER_MODEL
+        self.model = settings.router_model
 
     # --------------------------------------------------
     # Public Method

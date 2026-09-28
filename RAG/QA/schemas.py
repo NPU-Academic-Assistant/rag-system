@@ -1,13 +1,12 @@
 from pydantic import BaseModel
 
-class QARequest(BaseModel):
+class QAStart(BaseModel):
     course: str
     lesson: str
-    question : str
+    user_id : str
+
+class QAAsk(BaseModel):
+    user_id : str
+    Session_id : str
+    Question : str
     
-class Chunk(BaseModel):
-    course: str
-    lesson: str
-    concept: str
-    chunk_index: int
-    text: str

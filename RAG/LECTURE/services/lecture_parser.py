@@ -1,4 +1,4 @@
-from app.assistant.models.concept_state import ConceptState
+from RAG.LECTURE.services.models.concept_state import ConceptState
 
 
 class LessonParser:

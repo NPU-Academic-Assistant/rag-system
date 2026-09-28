@@ -1,5 +1,5 @@
-from RAG.LECTURE.prompts.answer_review_prompt import AnswerReviewPrompt
-from RAG.LECTURE.prompts.teaching_context_builder import TeachingContextBuilder
+from SHARED.prompts.answer_review_prompt import AnswerReviewPrompt
+from SHARED.prompts.teaching_context_builder import TeachingContextBuilder
 
 
 class AnswerReviewer:

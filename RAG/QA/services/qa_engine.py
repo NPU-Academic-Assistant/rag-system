@@ -1,4 +1,4 @@
-from app.assistant.qa.qa_state import QAState
+from RAG.QA.services.qa_state import QAState
 
 
 class QAEngine:

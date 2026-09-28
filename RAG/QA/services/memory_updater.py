@@ -1,7 +1,6 @@
 import json
-
-from app.assistant.llm.llm_client import llm_client
-from app.assistant.prompts.memory_prompt import MemoryPrompt
+from SHARED.dependencies import llm_client
+from SHARED.prompts.memory_prompt import MemoryPrompt
 
 
 class MemoryUpdater:
