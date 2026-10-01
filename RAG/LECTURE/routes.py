@@ -9,13 +9,13 @@ from RAG.LECTURE.services.answer_reviewer import AnswerReviewer
 from RAG.LECTURE.services.lecture_engine import LectureEngine
 from RAG.LECTURE.services.models.teaching_state import TeachingState
 from SHARED.dependencies import get_collection as collection
-from SHARED.dependencies import llm_client
+from SHARED.dependencies import get_llm_client
 
 
 router = APIRouter()
 
 @router.post("/lecture")
-def start(req:LectureStart,llm = Depends(llm_client), coll= Depends(collection)):
+def start(req:LectureStart,llm = Depends(get_llm_client), coll= Depends(collection)):
     professor = AnswerReviewer(llm.client, llm.model)
     lecture_retriever = LectureRetriever()
     parser = LessonParser()

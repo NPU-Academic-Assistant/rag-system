@@ -9,13 +9,13 @@ class Settings(BaseSettings):
     postgresql_host: str = "localhost"
     postgresql_port: int = 5432
     postgresql_name: str
-    base_url: str = SettingsConfigDict(env_file=".env")
-    teacher_model: str = SettingsConfigDict(env_file=".env")
-    memory_model: str = SettingsConfigDict(env_file=".env")
-    router_model: str = SettingsConfigDict(env_file=".env")
+    openrouter_api_key: str
+    base_url: str 
+    teacher_model: str 
+    memory_model: str 
+    router_model: str
 
     
 
 
 settings = Settings()
-

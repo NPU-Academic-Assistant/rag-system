@@ -38,7 +38,7 @@ class LLM:
     def __init__(self):
 
         self.client = OpenAI(
-    api_key=os.getenv("OPENROUTER_API_KEY"),
+    api_key = settings.openrouter_api_key,
     base_url= settings.base_url,
 )
 
@@ -79,8 +79,9 @@ class LLM:
         )
 
         return self.generate(prompt)
-# Shared singleton used across the entire project.
-llm_client = LLM()
+
+def get_llm_client():
+    return LLM()
 
 
 ROUTER_TEMPERATURE = 0.0

@@ -7,14 +7,14 @@ from RAG.QA.services.qa_engine import QAEngine
 from RAG.QA.services.qa_sessions import create_session
 from RAG.QA.services.qa_sessions import get_session
 from SHARED.dependencies import get_collection as collection
-from SHARED.dependencies import llm_client 
+from SHARED.dependencies import get_llm_client 
 from SHARED.embeddings import generate_embedding
 
 
 router = APIRouter()
 
 @router.post("/qa/start")
-def start(req: QAStart,llm =Depends(llm_client) , collec = Depends(collection)):
+def start(req: QAStart,llm =Depends(get_llm_client) , collec = Depends(collection)):
     answerer = QAAnswerer(llm.client, llm.model)
     engine = QAEngine(qa_retrieve,answerer,generate_embedding, collec)
     engine.start_session(req.course, req.lesson)

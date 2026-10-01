@@ -1,5 +1,5 @@
-from app.retrieval.database import collection
-from app.retrieval.lecture_retriever_core import lecture_retrieve
+from SHARED.dependencies import collection
+from RAG.LECTURE.services.lecture_retriever_core import lecture_retrieve
 
 
 class LectureRetriever:

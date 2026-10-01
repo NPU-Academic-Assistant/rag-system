@@ -1,4 +1,4 @@
-from app.assistant.prompts.professor_identity_prompt import ProfessorIdentityPrompt
+from SHARED.prompts.professor_identity_prompt import ProfessorIdentityPrompt
 
 
 class AnswerReviewPrompt:
