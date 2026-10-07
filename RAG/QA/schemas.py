@@ -7,6 +7,6 @@ class QAStart(BaseModel):
 
 class QAAsk(BaseModel):
     user_id : str
-    Session_id : str
-    Question : str
+    session_id : str
+    question : str
     

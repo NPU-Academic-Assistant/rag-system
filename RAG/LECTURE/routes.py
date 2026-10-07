@@ -8,14 +8,13 @@ from RAG.LECTURE.services.lecture_parser import LessonParser
 from RAG.LECTURE.services.answer_reviewer import AnswerReviewer
 from RAG.LECTURE.services.lecture_engine import LectureEngine
 from RAG.LECTURE.services.models.teaching_state import TeachingState
-from SHARED.dependencies import get_collection as collection
 from SHARED.dependencies import get_llm_client
 
 
 router = APIRouter()
 
-@router.post("/lecture")
-def start(req:LectureStart,llm = Depends(get_llm_client), coll= Depends(collection)):
+@router.post("/lecture/start")
+def start(req:LectureStart,llm = Depends(get_llm_client)):
     professor = AnswerReviewer(llm.client, llm.model)
     lecture_retriever = LectureRetriever()
     parser = LessonParser()
@@ -26,6 +25,6 @@ def start(req:LectureStart,llm = Depends(get_llm_client), coll= Depends(collecti
 
 @router.post("/lecture/action")
 def action(req: LectureAction):
-    engine = get_session(req.user_id, req.session_id)
+    engine = get_session(req.session_id, req.user_id)
     return engine.handle_action(req.action)
     

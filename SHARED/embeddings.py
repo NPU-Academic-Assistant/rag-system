@@ -1,7 +1,8 @@
 from sentence_transformers import SentenceTransformer
-from SHARED.config import settings
+from modelscope import snapshot_download
 
-model_name = settings.embedding_model
+
+model_name = snapshot_download("BAAI/bge-small-en-v1.5")
 model = SentenceTransformer(model_name)
 
 def generate_embedding(text):

@@ -10,7 +10,6 @@ from SHARED.dependencies import get_collection as collection
 from SHARED.dependencies import get_llm_client 
 from SHARED.embeddings import generate_embedding
 
-
 router = APIRouter()
 
 @router.post("/qa/start")
@@ -19,11 +18,8 @@ def start(req: QAStart,llm =Depends(get_llm_client) , collec = Depends(collectio
     engine = QAEngine(qa_retrieve,answerer,generate_embedding, collec)
     engine.start_session(req.course, req.lesson)
     return create_session(req.user_id ,engine)
-    
-
 
 @router.post("/qa/ask")
 def ask(req:QAAsk):
-    engine = get_session(req.Session_id, req.user_id)
-    return engine.ask(req.Question)
-    
+    engine = get_session(req.session_id, req.user_id)
+    return engine.ask(req.question)
