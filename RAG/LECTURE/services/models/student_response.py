@@ -1,11 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List
 
-
-# ==========================================================
-# Lecture Progress
-# ==========================================================
-
 @dataclass
 class LectureProgress:
 
@@ -15,11 +10,6 @@ class LectureProgress:
 
     percentage: float
 
-
-# ==========================================================
-# Lecture Response
-# ==========================================================
-
 @dataclass
 class LectureResponse:
     """
@@ -28,23 +18,11 @@ class LectureResponse:
     This object contains EVERYTHING the frontend needs.
     """
 
-    # ------------------------------------------------------
-    # Professor
-    # ------------------------------------------------------
-
     message: str
-
-    # ------------------------------------------------------
-    # Course
-    # ------------------------------------------------------
 
     course: str
 
     lesson: str
-
-    # ------------------------------------------------------
-    # Current Concept
-    # ------------------------------------------------------
 
     current_concept: str
 
@@ -52,21 +30,9 @@ class LectureResponse:
 
     page_number: int
 
-    # ------------------------------------------------------
-    # Mode
-    # ------------------------------------------------------
-
     mode: str
 
-    # ------------------------------------------------------
-    # Progress
-    # ------------------------------------------------------
-
     progress: LectureProgress
-
-    # ------------------------------------------------------
-    # UI
-    # ------------------------------------------------------
 
     available_actions: List[str] = field(default_factory=list)
 
@@ -75,8 +41,6 @@ class LectureResponse:
     lecture_finished: bool = False
 
     error: str | None = None
-
-    # ======================================================
 
     def to_dict(self):
 
@@ -122,8 +86,6 @@ class LectureResponse:
                 self.error
 
         }
-
-    # ======================================================
 
     def __str__(self):
 

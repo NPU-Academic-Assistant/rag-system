@@ -2,7 +2,6 @@ from dataclasses import dataclass, field
 
 from RAG.LECTURE.services.models.concept_history import ConceptHistory
 
-
 @dataclass
 class ConceptState:
     """
@@ -22,34 +21,19 @@ class ConceptState:
     The AI Professor teaches ONE ConceptState at a time.
     """
 
-    # ======================================================
-    # Concept Information
-    # ======================================================
-
     concept_id: int
 
     title: str
 
     content: str
-    # ======================================================
-    # Source Information
-    # ======================================================
 
     source_document: str = ""
 
     page_number: int = 0
 
-    # ======================================================
-    # Source Information
-    # ======================================================
-
     source_document: str = ""
 
     page_number: int = 0
-
-    # ======================================================
-    # Teaching Progress
-    # ======================================================
 
     visited: bool = False
 
@@ -57,19 +41,11 @@ class ConceptState:
 
     history: ConceptHistory = field(default_factory=ConceptHistory)
 
-    # ======================================================
-    # Progress
-    # ======================================================
-
     def mark_visited(self):
         self.visited = True
 
     def mark_completed(self):
         self.completed = True
-
-    # ======================================================
-    # History
-    # ======================================================
 
     def reset_history(self):
         self.history.reset()
@@ -86,10 +62,6 @@ class ConceptState:
     def increase_detail(self):
         self.history.increase_detail()
 
-    # ======================================================
-    # Helpers
-    # ======================================================
-
     def has_examples(self):
         return self.history.has_examples()
 
@@ -103,10 +75,6 @@ class ConceptState:
             "history": self.history.to_dict(),
         }
 
-    # ======================================================
-    # Export
-    # ======================================================
-
     def to_dict(self):
         return {
             "concept_id": self.concept_id,
@@ -118,8 +86,6 @@ class ConceptState:
             "completed": self.completed,
             "history": self.history.to_dict(),
         }
-
-    # ======================================================
 
     def __str__(self):
 

@@ -1,7 +1,6 @@
 import copy
 import json
 
-
 class LearningState:
     """
     Stores what the student is currently learning.
@@ -34,20 +33,12 @@ class LearningState:
 
         }
 
-    # --------------------------------------------------
-    # Get Current State
-    # --------------------------------------------------
-
     def get_state(self):
         """
         Return a safe copy of the Learning State.
         """
 
         return copy.deepcopy(self.state)
-
-    # --------------------------------------------------
-    # Apply Updates
-    # --------------------------------------------------
 
     def update_state(self, updates):
         """
@@ -89,20 +80,12 @@ class LearningState:
 
                 self.state[key] = value
 
-    # --------------------------------------------------
-    # Reset
-    # --------------------------------------------------
-
     def reset(self):
         """
         Reset the Learning State.
         """
 
         self.__init__()
-
-    # --------------------------------------------------
-    # Print
-    # --------------------------------------------------
 
     def print_state(self):
         """

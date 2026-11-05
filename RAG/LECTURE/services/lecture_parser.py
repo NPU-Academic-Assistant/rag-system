@@ -1,6 +1,5 @@
 from RAG.LECTURE.services.models.concept_state import ConceptState
 
-
 class LessonParser:
     """
     ==========================================================
@@ -30,10 +29,6 @@ class LessonParser:
 
         self.current_index = 0
 
-    # ==========================================================
-    # Public API
-    # ==========================================================
-
     def parse(self, retrieved_chunks):
         """
         Convert retrieved chunks into ordered ConceptState objects.
@@ -48,10 +43,6 @@ class LessonParser:
 
         grouped = {}
 
-        # ------------------------------------------------------
-        # Group chunks by concept
-        # ------------------------------------------------------
-
         for chunk in retrieved_chunks:
 
             concept_index = chunk.get(
@@ -62,42 +53,33 @@ class LessonParser:
                 "concept"
             )
 
-            # Skip records that do not represent a concept
-            if concept_name is None:
-                continue
-
             key = (
                 concept_index
                 if concept_index is not None
-                else concept_name
+                else concept_name or "__lesson_material__"
             )
 
             if key not in grouped:
 
                 grouped[key] = {
                     "concept_index": concept_index,
-                    "concept": concept_name,
+                    "concept": concept_name or "Lesson material",
                     "chunks": []
                 }
 
             grouped[key]["chunks"].append(chunk)
 
-        # ------------------------------------------------------
-        # Sort concepts
-        # ------------------------------------------------------
-
         ordered_groups = sorted(
             grouped.values(),
-            key=lambda group: (
-                group["concept_index"]
-                if group["concept_index"] is not None
-                else 999999
+            key=lambda group: min(
+                (
+                    chunk.get("chunk_index")
+                    if chunk.get("chunk_index") is not None
+                    else 999999
+                )
+                for chunk in group["chunks"]
             )
         )
-
-        # ------------------------------------------------------
-        # Build ConceptState objects
-        # ------------------------------------------------------
 
         for concept_id, group in enumerate(
             ordered_groups,
@@ -148,10 +130,6 @@ class LessonParser:
 
         return self.concepts
 
-    # ==========================================================
-    # Current Concept
-    # ==========================================================
-
     def current_concept(self):
 
         if not self.concepts:
@@ -162,10 +140,6 @@ class LessonParser:
             self.current_index
         ]
 
-    # ==========================================================
-    # Navigation
-    # ==========================================================
-
     def next_concept(self):
 
         if self.has_next():
@@ -174,8 +148,6 @@ class LessonParser:
 
         return self.current_concept()
 
-    # ----------------------------------------------------------
-
     def previous_concept(self):
 
         if self.has_previous():
@@ -183,10 +155,6 @@ class LessonParser:
             self.current_index -= 1
 
         return self.current_concept()
-
-    # ==========================================================
-    # Direct Access
-    # ==========================================================
 
     def get_concept(self, index):
 
@@ -200,10 +168,6 @@ class LessonParser:
 
         return self.concepts[index]
 
-    # ==========================================================
-    # Navigation Helpers
-    # ==========================================================
-
     def has_next(self):
 
         return (
@@ -211,35 +175,21 @@ class LessonParser:
             < len(self.concepts) - 1
         )
 
-    # ----------------------------------------------------------
-
     def has_previous(self):
 
         return self.current_index > 0
-
-    # ==========================================================
-    # Reset
-    # ==========================================================
 
     def reset(self):
 
         self.current_index = 0
 
-    # ==========================================================
-    # Information
-    # ==========================================================
-
     def total_concepts(self):
 
         return len(self.concepts)
 
-    # ----------------------------------------------------------
-
     def current_position(self):
 
         return self.current_index + 1
-
-    # ----------------------------------------------------------
 
     def is_finished(self):
 
@@ -248,15 +198,9 @@ class LessonParser:
             >= len(self.concepts) - 1
         )
 
-    # ----------------------------------------------------------
-
     def get_concepts(self):
 
         return self.concepts
-
-    # ==========================================================
-    # Debug / Inspection
-    # ==========================================================
 
     def print_lesson(self):
 

@@ -1,0 +1,11 @@
+*.env
+*.agents
+*.aws
+*.codex
+venv/
+.modelscope-cache/
+__pycache__/
+chroma_storage/
+DATA/   
+reasoning/       
+*.pyc

@@ -7,7 +7,10 @@ from dotenv import load_dotenv
 from SHARED.config import settings
 
 
-client = chromadb.PersistentClient(settings.chroma_path)
+client = chromadb.HttpClient(
+    host=settings.chromadb_host,
+    port=settings.chromadb_port,
+)
 
 collection = client.get_or_create_collection(
     name= "course_chunks",

@@ -1,6 +1,6 @@
 import json
 
-from SHARED.dependencies import llm_client
+from SHARED.dependencies import get_llm_client
 from SHARED.prompts.router_prompt import RouterPrompt
 from RAG.QA.router.route import Route
 from RAG.QA.router.route_decision import RouteDecision
@@ -26,7 +26,7 @@ class RequestRouter:
 
     def __init__(self):
 
-        self.client = llm_client.client
+        self.client = get_llm_client().client
         self.model = settings.router_model
 
     # --------------------------------------------------
