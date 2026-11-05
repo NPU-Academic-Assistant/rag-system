@@ -1,7 +1,6 @@
 from SHARED.prompts.answer_review_prompt import AnswerReviewPrompt
 from SHARED.prompts.teaching_context_builder import TeachingContextBuilder
 
-
 class AnswerReviewer:
     """
     AI Professor - Lecture Mode
@@ -22,10 +21,6 @@ class AnswerReviewer:
     def __init__(self, client, model):
         self.client = client
         self.model = model
-
-    # ==========================================================
-    # Lesson Introduction
-    # ==========================================================
 
     def introduce_lesson(self, course, lesson):
 
@@ -57,10 +52,6 @@ Return only your response.
 
         return self._generate(prompt)
 
-    # ==========================================================
-    # Teaching
-    # ==========================================================
-
     def teach(
         self,
         student_action,
@@ -78,10 +69,6 @@ Return only your response.
             concept=current_concept,
             context=context
         )
-
-        # ------------------------------------------------------
-        # Lecture grounding policy
-        # ------------------------------------------------------
 
         grounding_rules = f"""
 ==================================================
@@ -159,10 +146,6 @@ END LECTURE GROUNDING POLICY
 
         return self._generate(final_prompt)
 
-    # ==========================================================
-    # Lesson End
-    # ==========================================================
-
     def end_lesson(
         self,
         course,
@@ -188,10 +171,6 @@ Return only your response.
 """
 
         return self._generate(prompt)
-
-    # ==========================================================
-    # LLM
-    # ==========================================================
 
     def _generate(self, prompt):
 

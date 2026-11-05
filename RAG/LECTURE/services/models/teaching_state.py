@@ -3,7 +3,6 @@ from typing import List, Optional
 
 from RAG.LECTURE.services.models.concept_state import ConceptState
 
-
 @dataclass
 class TeachingState:
     """
@@ -26,25 +25,13 @@ class TeachingState:
     It ONLY stores state.
     """
 
-    # ======================================================
-    # Course
-    # ======================================================
-
     course: str = ""
 
     lesson: str = ""
 
-    # ======================================================
-    # Concepts
-    # ======================================================
-
     concepts: List[ConceptState] = field(default_factory=list)
 
     current_concept_index: int = 0
-
-    # ======================================================
-    # Lecture State
-    # ======================================================
 
     lecture_started: bool = False
 
@@ -54,10 +41,6 @@ class TeachingState:
 
     mode: str = "LECTURE"
 
-    # ======================================================
-    # Current Concept
-    # ======================================================
-
     @property
     def current_concept(self) -> Optional[ConceptState]:
 
@@ -65,10 +48,6 @@ class TeachingState:
             return None
 
         return self.concepts[self.current_concept_index]
-
-    # ======================================================
-    # Lesson Management
-    # ======================================================
 
     def start_lesson(self, course: str, lesson: str):
 
@@ -82,15 +61,9 @@ class TeachingState:
 
         self.waiting_for_student = True
 
-    # ------------------------------------------------------
-
     def load_concepts(self, concepts: List[ConceptState]):
 
         self.concepts = concepts
-
-    # ======================================================
-    # Lecture Control
-    # ======================================================
 
     def start_lecture(self):
 
@@ -99,15 +72,9 @@ class TeachingState:
         if self.current_concept:
             self.current_concept.mark_visited()
 
-    # ------------------------------------------------------
-
     def finish_lecture(self):
 
         self.lecture_finished = True
-
-    # ======================================================
-    # Navigation
-    # ======================================================
 
     def next_concept(self):
 
@@ -127,8 +94,6 @@ class TeachingState:
 
         return False
 
-    # ------------------------------------------------------
-
     def previous_concept(self):
 
         if self.current_concept_index > 0:
@@ -139,16 +104,10 @@ class TeachingState:
 
         return False
 
-    # ======================================================
-    # Progress
-    # ======================================================
-
     @property
     def total_concepts(self):
 
         return len(self.concepts)
-
-    # ------------------------------------------------------
 
     @property
     def completed_concepts(self):
@@ -157,8 +116,6 @@ class TeachingState:
             concept.completed
             for concept in self.concepts
         )
-
-    # ------------------------------------------------------
 
     @property
     def progress_percentage(self):
@@ -172,17 +129,9 @@ class TeachingState:
             1
         )
 
-    # ======================================================
-    # Student Waiting
-    # ======================================================
-
     def set_waiting(self, value: bool):
 
         self.waiting_for_student = value
-
-    # ======================================================
-    # Export
-    # ======================================================
 
     def to_dict(self):
 
@@ -210,8 +159,6 @@ class TeachingState:
                 else None
 
         }
-
-    # ======================================================
 
     def __str__(self):
 

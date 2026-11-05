@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class StudentAction(Enum):
     """
     ==========================================================
@@ -15,10 +14,6 @@ class StudentAction(Enum):
     The Lecture Engine decides what to do.
     """
 
-    # ------------------------------------------------------
-    # Lecture Control
-    # ------------------------------------------------------
-
     START = "START"
 
     CONTINUE = "CONTINUE"
@@ -28,10 +23,6 @@ class StudentAction(Enum):
     RESUME = "RESUME"
 
     FINISH = "FINISH"
-
-    # ------------------------------------------------------
-    # Learning Actions
-    # ------------------------------------------------------
 
     EXPLAIN_AGAIN = "EXPLAIN_AGAIN"
 
@@ -43,27 +34,15 @@ class StudentAction(Enum):
 
     MORE_EXAMPLES = "MORE_EXAMPLES"
 
-    # ------------------------------------------------------
-    # Navigation
-    # ------------------------------------------------------
-
     PREVIOUS = "PREVIOUS"
 
     NEXT = "NEXT"
 
     JUMP = "JUMP"
 
-    # ------------------------------------------------------
-    # Lecture Information
-    # ------------------------------------------------------
-
     STATUS = "STATUS"
 
     PROGRESS = "PROGRESS"
-
-    # ------------------------------------------------------
-    # Discussion Mode
-    # ------------------------------------------------------
 
     DISCUSSION = "DISCUSSION"
 
@@ -72,9 +51,5 @@ class StudentAction(Enum):
     QUIZ = "QUIZ"
 
     REVIEW = "REVIEW"
-
-    # ------------------------------------------------------
-    # System
-    # ------------------------------------------------------
 
     EXIT = "EXIT"

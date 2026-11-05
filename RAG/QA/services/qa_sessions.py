@@ -23,6 +23,6 @@ def get_session(session_id: str, user_id: int) -> QAEngine:
         raise ValueError("Invalid or expired session")
 
     if session["user_id"] != user_id:
-        raise PermissionError("Session does not belong to this user")
+        raise PermissionError("Session do es not belong to this user")
 
     return session["engine"]

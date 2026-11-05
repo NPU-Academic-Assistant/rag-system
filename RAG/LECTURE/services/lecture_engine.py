@@ -23,7 +23,6 @@ from RAG.LECTURE.services.models.student_response import (
     LectureProgress,
 )
 
-
 class LectureEngine:
 
     def __init__(
@@ -39,7 +38,6 @@ class LectureEngine:
         self.lesson_parser = lesson_parser
         self.state = teaching_state
 
-
     def start_lesson(self, course, lesson):
 
         self.state.start_lesson(course, lesson)
@@ -49,22 +47,19 @@ class LectureEngine:
             lesson
         )
         
-       # print("\n========== RAW RETRIEVED CHUNK ==========")
-        #print(chunks[0])
-        #print("=========================================\n")
         concepts = self.lesson_parser.parse(chunks)
 
         self.state.load_concepts(concepts)
 
-        return self._build_response(
-
-            self.professor.introduce_lesson(
-                course,
-                lesson
+        if not self.state.current_concept:
+            return self._build_response(
+                self.professor.introduce_lesson(course, lesson)
             )
 
-        )
-
+        # The first parsed concept is at index 0. Begin teaching it as soon
+        # as retrieval and parsing complete; do not wait for a separate START.
+        self.state.start_lecture()
+        return self._teach(StudentAction.START)
 
     def handle_action(self, action):
 
@@ -76,11 +71,28 @@ class LectureEngine:
 
             self.state.start_lecture()
 
+            if self.state.current_concept is None:
+                return self._build_response(
+                    self.professor.introduce_lesson(
+                        self.state.course,
+                        self.state.lesson
+                    )
+                )
+
             return self._teach(action)
 
         if action == StudentAction.CONTINUE:
 
             return self._continue()
+
+        if self.state.current_concept is None and action in {
+            StudentAction.EXPLAIN_AGAIN,
+            StudentAction.SIMPLIFY,
+            StudentAction.MORE_DETAIL,
+            StudentAction.EXAMPLE,
+            StudentAction.MORE_EXAMPLES,
+        }:
+            return self._teach(action)
 
         if action == StudentAction.EXPLAIN_AGAIN:
 
@@ -132,10 +144,16 @@ class LectureEngine:
 
         )
 
-
     def _teach(self, action):
 
         concept = self.state.current_concept
+
+        if concept is None:
+            self.state.set_waiting(True)
+            return self._build_response(
+                "There are no concepts available for this lesson yet. "
+                "Please add or load lesson material before starting the lecture."
+            )
 
         message = self.professor.teach(
 
@@ -151,8 +169,14 @@ class LectureEngine:
 
         return self._build_response(message)
 
-
     def _continue(self):
+
+        if self.state.current_concept is None:
+            self.state.set_waiting(True)
+            return self._build_response(
+                "There are no concepts available to continue with yet. "
+                "Please add or load lesson material before continuing."
+            )
 
         if not self.state.next_concept():
 
@@ -163,7 +187,6 @@ class LectureEngine:
             StudentAction.CONTINUE
 
         )
-
 
     def _finish(self):
 
@@ -185,10 +208,14 @@ class LectureEngine:
 
         )
 
-
     def _available_actions(self):
 
-        history = self.state.current_concept.history
+        concept = self.state.current_concept
+
+        if concept is None:
+            return ["STATUS", "FINISH"]
+
+        history = concept.history
 
         actions = [
 
@@ -223,7 +250,6 @@ class LectureEngine:
         )
 
         return actions
-
 
     def _build_response(
 

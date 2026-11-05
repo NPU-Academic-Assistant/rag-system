@@ -20,8 +20,12 @@ def start(req:LectureStart,llm = Depends(get_llm_client)):
     parser = LessonParser()
     state = TeachingState()
     engine = LectureEngine(professor, lecture_retriever, parser, state)
-    engine.start_lesson(req.course, req.lesson)
-    return create_session(req.user_id, engine)
+    initial_response = engine.start_lesson(req.course, req.lesson)
+    session_id = create_session(req.user_id, engine)
+    return {
+        "session_id": session_id,
+        "response": initial_response.to_dict(),
+    }
 
 @router.post("/lecture/action")
 def action(req: LectureAction):

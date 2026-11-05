@@ -15,7 +15,6 @@ def create_session(user_id: int, engine: LectureEngine) -> str:
 
     return session_id
 
-
 def get_session(session_id: str, user_id: int) -> LectureEngine:
     session = sessions.get(session_id)
 

@@ -1,7 +1,6 @@
 from SHARED.dependencies import collection
 from RAG.LECTURE.services.lecture_retriever_core import lecture_retrieve
 
-
 class LectureRetriever:
     """
     Adapter between Wael's Lecture Retriever and our
@@ -15,10 +14,6 @@ class LectureRetriever:
 
     def __init__(self):
         self.collection = collection
-
-    # ======================================================
-    # LESSON MATERIAL
-    # ======================================================
 
     def get_lesson_material(self, course, lesson):
         """
@@ -72,16 +67,11 @@ class LectureRetriever:
 
         return chunks
 
-    # ======================================================
-    # SINGLE CONCEPT MATERIAL
-    # ======================================================
-
     def get_concept_material(
         self,
         course,
         lesson,
-        concept,
-        top_k=5
+        concept
     ):
         """
         Uses Wael's retrieval function to retrieve the
@@ -92,6 +82,5 @@ class LectureRetriever:
             collection=self.collection,
             course=course,
             lesson=lesson,
-            concept=concept,
-            top_k=top_k
+            concept=concept
         )

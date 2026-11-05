@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List
 
-
 @dataclass
 class ConceptHistory:
     """
@@ -26,10 +25,6 @@ class ConceptHistory:
     moves to a new concept.
     """
 
-    # ======================================================
-    # Teaching Counters
-    # ======================================================
-
     examples_given: int = 0
 
     re_explanations: int = 0
@@ -38,17 +33,9 @@ class ConceptHistory:
 
     detail_level: int = 0
 
-    # ======================================================
-    # Teaching Memory
-    # ======================================================
-
     used_examples: List[str] = field(default_factory=list)
 
     used_strategies: List[str] = field(default_factory=list)
-
-    # ======================================================
-    # Recording Methods
-    # ======================================================
 
     def record_example(self, example: str = ""):
         """
@@ -60,8 +47,6 @@ class ConceptHistory:
         if example:
             self.used_examples.append(example)
 
-    # ------------------------------------------------------
-
     def record_re_explanation(self, strategy: str = ""):
         """
         Records another explanation.
@@ -72,16 +57,12 @@ class ConceptHistory:
         if strategy:
             self.used_strategies.append(strategy)
 
-    # ------------------------------------------------------
-
     def record_simplification(self):
         """
         Records a simplification.
         """
 
         self.simplifications += 1
-
-    # ------------------------------------------------------
 
     def increase_detail(self):
         """
@@ -90,24 +71,14 @@ class ConceptHistory:
 
         self.detail_level += 1
 
-    # ======================================================
-    # Helpers
-    # ======================================================
-
     def has_examples(self) -> bool:
         return self.examples_given > 0
-
-    # ------------------------------------------------------
 
     def has_been_simplified(self) -> bool:
         return self.simplifications > 0
 
-    # ------------------------------------------------------
-
     def has_multiple_examples(self) -> bool:
         return self.examples_given > 1
-
-    # ------------------------------------------------------
 
     def reset(self):
         """
@@ -126,8 +97,6 @@ class ConceptHistory:
 
         self.used_strategies.clear()
 
-    # ======================================================
-
     def to_dict(self):
 
         return {
@@ -145,8 +114,6 @@ class ConceptHistory:
             "used_strategies": self.used_strategies
 
         }
-
-    # ======================================================
 
     def __str__(self):
 
