@@ -2,11 +2,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env")
-    postgresql_user: str
-    postgresql_password: str
-    postgresql_host: str
-    postgresql_port: int 
-    postgresql_name: str
+    postgres_user: str
+    postgres_password: str
+    postgres_host: str
+    postgres_port: int 
+    postgres_name: str
     chromadb_user: str
     chromadb_password: str 
     chromadb_host: str
